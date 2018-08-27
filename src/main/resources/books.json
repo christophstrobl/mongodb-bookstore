@@ -1,0 +1,67 @@
+[
+  {
+    "_id": "bb4e114f",
+    "title": "The Painted Man",
+    "author": [
+      "Peter V. Brett"
+    ],
+    "published_date": "2009-08-01",
+    "pages": 544,
+    "language": "English",
+    "publisher_id": "Harper Collins Publishers",
+    "available": 3,
+    "checkout": []
+  },
+  {
+    "_id": "1c56b2b0",
+    "title": "The Desert Spear",
+    "author": [
+      "Peter V. Brett"
+    ],
+    "published_date": "2010-01-04",
+    "pages": 560,
+    "language": "English",
+    "publisher_id": "Harper Collins Publishers",
+    "available": 3,
+    "checkout": []
+  },
+  {
+    "_id": "ade1cb9b",
+    "title": "Daylight War",
+    "author": [
+      "Peter V. Brett"
+    ],
+    "published_date": "2013-11-03",
+    "pages": 804,
+    "language": "English",
+    "publisher_id": "Harper Collins Publishers",
+    "available": 3,
+    "checkout": []
+  },
+  {
+    "_id": "c5a809ef",
+    "title": "The Skull Throne",
+    "author": [
+      "Peter V. Brett"
+    ],
+    "published_date": "2015-31-03",
+    "pages": 704,
+    "language": "English",
+    "publisher_id": "Harper Collins Publishers",
+    "available": 3,
+    "checkout": []
+  },
+  {
+    "_id": "f430cb49",
+    "title": "The Core",
+    "author": [
+      "Peter V. Brett"
+    ],
+    "published_date": "2017-28-09",
+    "pages": 880,
+    "language": "English",
+    "publisher_id": "Harper Collins Publishers",
+    "available": 3,
+    "checkout": []
+  }
+]
