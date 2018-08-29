@@ -15,6 +15,9 @@
  */
 package com.example.bookstore.sync;
 
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+
 import com.example.bookstore.Book;
 import com.example.bookstore.Customer;
 import com.example.bookstore.Order;
@@ -31,5 +34,6 @@ public interface OrderService {
 	 * @param book
 	 * @return
 	 */
+	@Retryable(backoff = @Backoff(5000))
 	Order buy(Customer customer, Book book);
 }

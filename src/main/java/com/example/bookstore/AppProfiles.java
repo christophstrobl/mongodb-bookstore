@@ -45,6 +45,11 @@ public final class AppProfiles {
 	public static final String REACTIVE_TRANSACTION = "rtx";
 
 	/**
+	 * Spring {@link org.springframework.context.annotation.Profile} to activate retry.
+	 */
+	public static final String RETRYABLE_TRANSACTION = "retry";
+
+	/**
 	 * Spring {@link org.springframework.context.annotation.Profile} to be used to demonstrate change streams.
 	 */
 	public static final String REACTIVE_CHANGESTREAMS = "rcs";

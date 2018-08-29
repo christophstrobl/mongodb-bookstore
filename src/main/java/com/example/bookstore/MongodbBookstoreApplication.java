@@ -31,7 +31,7 @@ import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.ChangeStreamOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -152,5 +152,12 @@ public class MongodbBookstoreApplication {
 					.doOnNext(System.out::println) //
 					.subscribe();
 		}
+	}
+
+	@Configuration
+	@Profile(AppProfiles.RETRYABLE_TRANSACTION)
+	@EnableRetry
+	class RetryableTransactionConfiguration {
+
 	}
 }

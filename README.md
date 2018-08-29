@@ -11,6 +11,7 @@ sa | Synchronous Atomic Operations with denormalized Data Model
 stx | Synchronous Multi Document Transactions
 rtx | Reactive Multi Document Transactions
 rcs | Active this profile along with one of the transactional (stx, rtx) ones to subscribe to changes on the `order` collection.
+retry | Activate this profile to retry failed transactions via [Spring Retry](https://github.com/spring-projects/spring-retry).
 reset | Reset the initial set of collections and pre fill it with test data
 
 **Web Endpoints**
@@ -103,6 +104,34 @@ for processing the checkout inside a transaction.
 **Spring Profile:** rtx   
 **MongoDB Collections:** books, order  
 **Components**: ReactiveOrderService, ReactiveBookstoreHandler 
+
+### Retry Transactions
+
+It may happen that multiple transactions try to alter the very same document which leads to write conflicts and therefore 
+the abortion of the transaction.
+
+This scenario can be provoked by:
+
+* Start the application
+* Open [Mongo Shell](https://docs.mongodb.com/manual/mongo/#the-mongo-shell) and execute
+```bash
+rs0:PRIMARY> session = db.getMongo().startSession({ "mode" : "primary" });
+rs0:PRIMARY> session.startTransaction();
+rs0:PRIMARY> session.getDatabase("mongodb-bookstore").books.update({ "_id" : "f430cb49", "available" : { "$gt" : 0 } },  { "$inc" : { "available" : -1 } });
+```
+* Call the order endpoint
+```bash
+~ $ http :8080/book/f430cb49/order?customer=cstrobl
+```
+* The Application will retry the operation for 3 times with 5 seconds delay in between.
+* Switch to Mongo Shell again and _commit_ the transaction within time to have the other one succeed as well.
+```bash
+rs0:PRIMARY> session.commitTransaction();
+```
+
+**Spring Profile:** stx,retry   
+**MongoDB Collections:** books, order  
+**Components**: TransactionalOrderService, SyncBookstoreHandler, RetryTemplate 
 
 ## Requirements
 
