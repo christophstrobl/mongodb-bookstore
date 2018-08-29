@@ -68,16 +68,6 @@ public class MongodbBookstoreApplication {
 			return MongoClients.create(settings);
 		}
 
-		@Bean // to be removed once https://github.com/spring-projects/spring-boot/pull/14176 is in place
-		MongoDbFactory mongoDbFactory(com.mongodb.client.MongoClient client) {
-			return new SimpleMongoClientDbFactory(client, "mongodb-bookstore");
-		}
-
-		@Bean // to be removed once https://github.com/spring-projects/spring-boot/pull/14176 is in place
-		MongoTemplate mongoTemplate(MongoDbFactory factory) {
-			return new MongoTemplate(factory);
-		}
-
 		/**
 		 * {@link RouterFunction Routes} to interact with the MongoDB Bookstore Application delegating the processing of
 		 * {@link org.springframework.web.reactive.function.server.ServerRequest requests} to the {@link BookstoreHandler}.
