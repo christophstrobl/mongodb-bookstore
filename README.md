@@ -10,6 +10,7 @@ Profile | Description
 sa | Synchronous Atomic Operations with denormalized Data Model
 stx | Synchronous Multi Document Transactions
 rtx | Reactive Multi Document Transactions
+rcs | Active this profile along with one of the transactional (stx, rtx) ones to subscribe to changes on the `order` collection.
 reset | Reset the initial set of collections and pre fill it with test data
 
 **Web Endpoints**
@@ -17,7 +18,7 @@ reset | Reset the initial set of collections and pre fill it with test data
 URL | Sample | Description
 --- | --- | ---
 :8080/books | `http :8080/books` | List all books.
-:8080/order/{book}?customer= | `http :8080/order/f430cb49?customer=christoph` | Place an order for a book.
+:8080/book/{book}/order?customer= | `http :8080/book/bb4e114f/order?customer=christoph` | Place an order for a book.
 
 ### Synchronous Atomic Operations with denormalized Data Model
 
@@ -65,7 +66,7 @@ Still the number of available copies is kept within the `books` collection.
 {
     "by" : "cstrobl",
     "date" : "2018-08-27T10:11:59.853Z",
-    "books" : [ { "$ref" : "books", "$id" : "f430cb49" } ]
+    "books" : [ { "$ref" : "books", "$id" : "bb4e114f" } ]
 }
 ```
 
@@ -95,7 +96,7 @@ for processing the checkout inside a transaction.
 {
     "by" : "cstrobl",
     "date" : "2018-08-27T10:11:59.853Z",
-    "books" : [ { "$ref" : "books", "$id" : "f430cb49" } ]
+    "books" : [ { "$ref" : "books", "$id" : "bb4e114f" } ]
 }
 ```
 

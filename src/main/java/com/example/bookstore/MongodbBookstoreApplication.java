@@ -20,6 +20,7 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +28,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
+import org.springframework.data.mongodb.core.ChangeStreamOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -86,7 +89,7 @@ public class MongodbBookstoreApplication {
 		RouterFunction<ServerResponse> routerFunction(BookstoreHandler handler) {
 
 			return RouterFunctions.route(GET("/books"), handler::books) //
-					.andRoute(GET("/order/{book}"), handler::order);
+					.andRoute(GET("/book/{book}/order"), handler::order);
 		}
 
 		/**
@@ -142,6 +145,22 @@ public class MongodbBookstoreApplication {
 					.build();
 
 			return com.mongodb.reactivestreams.client.MongoClients.create(settings);
+		}
+	}
+
+	@Configuration
+	@Profile(AppProfiles.REACTIVE_CHANGESTREAMS)
+	class ReactiveChangeStreamConfiguration {
+
+		@Value("${spring.data.mongodb.database}") String database;
+
+		@PostConstruct
+		public void init() {
+
+			new ReactiveMongoTemplate(com.mongodb.reactivestreams.client.MongoClients.create(), database) //
+					.changeStream("order", ChangeStreamOptions.empty(), Order.class) //
+					.doOnNext(System.out::println) //
+					.subscribe();
 		}
 	}
 }

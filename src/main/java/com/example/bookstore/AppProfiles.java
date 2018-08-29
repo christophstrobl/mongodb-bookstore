@@ -44,6 +44,11 @@ public final class AppProfiles {
 	 */
 	public static final String REACTIVE_TRANSACTION = "rtx";
 
+	/**
+	 * Spring {@link org.springframework.context.annotation.Profile} to be used to demonstrate change streams.
+	 */
+	public static final String REACTIVE_CHANGESTREAMS = "rcs";
+
 	private AppProfiles() { /* u can't touch this */}
 
 }
