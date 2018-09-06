@@ -15,6 +15,9 @@
  */
 package com.example.bookstore.util;
 
+import org.bson.json.JsonMode;
+import org.bson.json.JsonWriterSettings;
+
 import com.mongodb.event.CommandFailedEvent;
 import com.mongodb.event.CommandListener;
 import com.mongodb.event.CommandStartedEvent;
@@ -31,7 +34,8 @@ public enum ConsoleOutMongoDBCommandListener implements CommandListener {
 	public void commandStarted(CommandStartedEvent event) {
 
 		System.out.println("\nSending Command: " + event.getCommandName());
-		System.out.println(bgColored(COLOR.CYAN, "-->") + " " + event.getCommand().toJson());
+		System.out.println(bgColored(COLOR.CYAN, "-->") + " "
+				+ event.getCommand().toJson(JsonWriterSettings.builder().indent(true).outputMode(JsonMode.RELAXED).build()));
 	}
 
 	@Override

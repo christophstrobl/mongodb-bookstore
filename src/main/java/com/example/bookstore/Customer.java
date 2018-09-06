@@ -27,10 +27,6 @@ public class Customer {
 
 	@Id String email;
 
-	public Customer(String email) {
-		this.email = email;
-	}
-
 	public static Customer of(String alias) {
 
 		switch (alias) {
@@ -56,6 +52,10 @@ public class Customer {
 
 	public static Customer oliver() {
 		return new Customer("ogierke@pivotal.io");
+	}
+
+	public static Customer guest() {
+		return new Customer("guest@fantasy-bookstore.io");
 	}
 
 }

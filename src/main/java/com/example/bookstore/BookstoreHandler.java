@@ -36,6 +36,14 @@ public interface BookstoreHandler {
 	Mono<ServerResponse> books(ServerRequest request);
 
 	/**
+	 * Process a {@link ServerRequest} for a single {@link Book}.
+	 *
+	 * @param request
+	 * @return
+	 */
+	Mono<ServerResponse> book(ServerRequest request);
+
+	/**
 	 * Process a {@link ServerRequest} to {@link Order order} a specific {@link Book}.
 	 *
 	 * @param request

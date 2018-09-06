@@ -15,6 +15,9 @@
  */
 package com.example.bookstore.reactive.transaction;
 
+import static org.springframework.data.mongodb.core.query.Criteria.*;
+import static org.springframework.data.mongodb.core.query.Query.*;
+
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -23,8 +26,6 @@ import java.util.Date;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +63,7 @@ public class ReactiveOrderService {
 					.flatMap(order -> {
 
 						return action.update(Book.class) //
-								.matching(Query.query(Criteria.where("id").is(book.getId()).and("stock").gt(0))) //
+								.matching(query(where("id").is(book.getId()).and("stock").gt(0))) //
 								.apply(new Update().inc("stock", -1)) //
 								.first() //
 								.flatMap(result -> {

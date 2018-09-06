@@ -15,6 +15,8 @@
  */
 package com.example.bookstore.reactive.web;
 
+import static org.springframework.web.reactive.function.server.ServerResponse.*;
+
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -47,16 +49,20 @@ public class ReactiveBookstoreHandler implements BookstoreHandler {
 	@Override
 	public Mono<ServerResponse> books(ServerRequest request) {
 
-		return ServerResponse.ok() //
-				.body(bookRepository.findAll(), Book.class);
+		return ok().body(bookRepository.findAll(), Book.class);
+	}
+
+	@Override
+	public Mono<ServerResponse> book(ServerRequest request) {
+		return ok().body(bookRepository.findById(request.pathVariable("book")), Book.class);
 	}
 
 	@Override
 	public Mono<ServerResponse> order(ServerRequest request) {
 
-		Customer customer = Customer.of(request.queryParam("customer").orElse("guest@mongodb-bookstore.io"));
+		Customer customer = Customer.of(request.queryParam("customer").orElse(Customer.guest().getEmail()));
 
-		return ServerResponse.ok() //
+		return ok() //
 				.body(bookRepository.findById(request.pathVariable("book")) //
 						.flatMap(book -> orderService.buy(customer, book)), Order.class);
 	}

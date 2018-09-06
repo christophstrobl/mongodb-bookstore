@@ -30,6 +30,6 @@ public class BookSoldOutException extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		return String.format("o_O we've run out of %s by %s", book.title, book.authors);
+		return String.format("o_O we've run out of %s by %s", book.getTitle(), book.getAuthors());
 	}
 }

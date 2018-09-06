@@ -15,6 +15,9 @@
  */
 package com.example.bookstore.sync.web;
 
+import static org.springframework.web.reactive.function.server.ServerResponse.*;
+import static reactor.core.publisher.Mono.*;
+
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -47,20 +50,25 @@ public class SyncBookstoreHandler implements BookstoreHandler {
 
 	@Override
 	public Mono<ServerResponse> books(ServerRequest request) {
+		return ok().body(Flux.fromIterable(bookRepository.findAll()), Book.class);
+	}
 
-		return ServerResponse.ok() //
-				.body(Flux.fromIterable(bookRepository.findAll()), Book.class);
+	@Override
+	public Mono<ServerResponse> book(ServerRequest request) {
+		return ok().body(just(bookById(request)), Book.class);
 	}
 
 	@Override
 	public Mono<ServerResponse> order(ServerRequest request) {
 
-		Customer customer = Customer.of(request.queryParam("customer").orElse("guest@mongodb-bookstore.io"));
-		Book book = bookRepository.findById(request.pathVariable("book")).orElseThrow(
-				() -> new RuntimeException(String.format("No book found for id %s", request.pathVariable("book"))));
+		Customer customer = Customer.of(request.queryParam("customer").orElse(Customer.guest().getEmail()));
 
-		return ServerResponse.ok() //
-				.body(Mono.just(orderService.buy(customer, book)), Order.class);
+		return ok().body(just(orderService.buy(customer, bookById(request))), Order.class);
 	}
 
+	private Book bookById(ServerRequest request) {
+
+		return bookRepository.findById(request.pathVariable("book")).orElseThrow(
+				() -> new RuntimeException(String.format("No book found for id %s", request.pathVariable("book"))));
+	}
 }

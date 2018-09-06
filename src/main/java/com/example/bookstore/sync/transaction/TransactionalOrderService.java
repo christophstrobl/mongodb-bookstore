@@ -15,6 +15,9 @@
  */
 package com.example.bookstore.sync.transaction;
 
+import static org.springframework.data.mongodb.core.query.Criteria.*;
+import static org.springframework.data.mongodb.core.query.Query.*;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
@@ -24,8 +27,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -65,7 +66,7 @@ public class TransactionalOrderService implements OrderService {
 			orderRepository.save(order);
 
 			UpdateResult result = mongoOps.update(Book.class) //
-					.matching(Query.query(Criteria.where("id").is(book.getId()).and("stock").gt(0))) //
+					.matching(query(where("id").is(book.getId()).and("stock").gt(0))) //
 					.apply(new Update().inc("stock", -1)) //
 					.first();
 

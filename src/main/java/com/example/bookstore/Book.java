@@ -15,7 +15,9 @@
  */
 package com.example.bookstore;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
@@ -48,6 +50,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  */
 @Data
 @Document("books")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
 
 	@Id String id;

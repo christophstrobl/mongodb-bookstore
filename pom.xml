@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
-	<artifactId>mongodb-bookstore</artifactId>
+	<artifactId>fantasy-bookstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>mongodb-bookstore</name>
+	<name>Fantasy-Bookstore</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>

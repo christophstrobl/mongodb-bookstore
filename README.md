@@ -1,6 +1,6 @@
-## Welcome to the MongoDB Bookstore
+## Welcome to the ![Fantasy Bookstore](/fantasy_bookstore.png?raw=true)
 
-The _MongoDB Bookstore_ is a tiny [SpringBoot](https://github.com/spring-projects/spring-boot) application outlining usage of different MongoDB Data Models for atomic operations.
+The _Fantasy Bookstore_ is a tiny [SpringBoot](https://github.com/spring-projects/spring-boot) application outlining usage of different MongoDB Data Models for atomic operations.
 The _Bookstore_ refers to and extends the [Model Data for Atomic Operations](https://docs.mongodb.com/manual/tutorial/model-data-for-atomic-operations/#model-data-for-atomic-operations) example.
 
 Use [Application Profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-adding-active-profiles) to activate the different approaches.
@@ -18,8 +18,9 @@ reset | Reset the initial set of collections and pre fill it with test data
 
 URL | Sample | Description
 --- | --- | ---
-:8080/books | `http :8080/books` | List all books.
-:8080/book/{book}/order?customer= | `http :8080/book/bb4e114f/order?customer=christoph` | Place an order for a book.
+GET  :8080/books | `http :8080/books` | List all books.
+GET  :8080/book/{book} | `http :8080/book/bb4e114f` | A single Book.
+POST :8080/book/{book}/order?customer= | `http POST :8080/book/bb4e114f/order?customer=christoph` | Place an order for a book.
 
 ### Synchronous Atomic Operations with denormalized Data Model
 
@@ -117,11 +118,11 @@ This scenario can be provoked by:
 ```bash
 rs0:PRIMARY> session = db.getMongo().startSession({ "mode" : "primary" });
 rs0:PRIMARY> session.startTransaction();
-rs0:PRIMARY> session.getDatabase("mongodb-bookstore").books.update({ "_id" : "f430cb49", "available" : { "$gt" : 0 } },  { "$inc" : { "available" : -1 } });
+rs0:PRIMARY> session.getDatabase("fantasy-bookstore").books.update({ "_id" : "f430cb49", "available" : { "$gt" : 0 } },  { "$inc" : { "available" : -1 } });
 ```
 * Call the order endpoint
 ```bash
-~ $ http :8080/book/f430cb49/order?customer=cstrobl
+~ $ http POST :8080/book/f430cb49/order?customer=cstrobl
 ```
 * The Application will retry the operation for 3 times with 5 seconds delay in between.
 * Switch to Mongo Shell again and _commit_ the transaction within time to have the other one succeed as well.

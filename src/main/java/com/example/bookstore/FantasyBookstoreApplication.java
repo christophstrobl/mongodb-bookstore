@@ -44,10 +44,10 @@ import com.mongodb.client.MongoClients;
  * @author Christoph Strobl
  */
 @SpringBootApplication
-public class MongodbBookstoreApplication {
+public class FantasyBookstoreApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MongodbBookstoreApplication.class, args);
+		SpringApplication.run(FantasyBookstoreApplication.class, args);
 	}
 
 	/**
@@ -79,7 +79,8 @@ public class MongodbBookstoreApplication {
 		RouterFunction<ServerResponse> routerFunction(BookstoreHandler handler) {
 
 			return RouterFunctions.route(GET("/books"), handler::books) //
-					.andRoute(GET("/book/{book}/order"), handler::order);
+					.andRoute(GET("/book/{book}"), handler::book) //
+					.andRoute(POST("/book/{book}/order"), handler::order);
 		}
 
 		/**
