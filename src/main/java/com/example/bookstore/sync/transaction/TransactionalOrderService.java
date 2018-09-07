@@ -46,7 +46,7 @@ import com.mongodb.client.result.UpdateResult;
  * @author Christoph Strobl
  */
 @Service
-@Qualifier("transactional-oder-service")
+@Qualifier("transactional-order-service")
 @Profile({ AppProfiles.SYNC_TRANSACTION })
 @RequiredArgsConstructor
 public class TransactionalOrderService implements OrderService {

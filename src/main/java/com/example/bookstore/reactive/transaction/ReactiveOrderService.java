@@ -66,13 +66,13 @@ public class ReactiveOrderService {
 								.matching(query(where("id").is(book.getId()).and("stock").gt(0))) //
 								.apply(new Update().inc("stock", -1)) //
 								.first() //
-								.flatMap(result -> {
+								.map(result -> {
 
 									if (result.getModifiedCount() == 0) {
 										throw new BookSoldOutException(book);
 									}
 
-									return Mono.just(order);
+									return order;
 								});
 					});
 		}).next();
