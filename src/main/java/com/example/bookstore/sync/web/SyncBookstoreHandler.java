@@ -41,7 +41,7 @@ import com.example.bookstore.sync.OrderService;
  * @author Christoph Strobl
  */
 @Component
-@Profile({ AppProfiles.SYNC_ATOMIC, AppProfiles.SYNC_TRANSACTION })
+@Profile({ AppProfiles.SYNC_ATOMIC, AppProfiles.SYNC_TRANSACTION, AppProfiles.NATIVE_SYNC_TRANSACTION })
 @RequiredArgsConstructor
 public class SyncBookstoreHandler implements BookstoreHandler {
 

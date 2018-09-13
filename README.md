@@ -8,7 +8,8 @@ Use [Application Profiles](https://docs.spring.io/spring-boot/docs/current/refer
 Profile | Description
 --- | ---
 sa | Synchronous Atomic Operations with denormalized Data Model
-stx | Synchronous Multi Document Transactions
+stxn | Synchronous Multi Document Transactions using just the native MongoClient
+stx | Synchronous Spring managed Multi Document Transactions 
 rtx | Reactive Multi Document Transactions
 rcs | Active this profile along with one of the transactional (stx, rtx) ones to subscribe to changes on the `order` collection.
 retry | Activate this profile to retry failed transactions via [Spring Retry](https://github.com/spring-projects/spring-retry).
@@ -46,7 +47,7 @@ Each and every `Order` is tracked by `checkout` within the `Book` itself.
 **MongoDB Collections:** books  
 **Components**: AtomicOrderService, SyncBookstoreHandler    
 
-### Synchronous Multi Document Transactions
+### Synchronous Spring Managed Multi Document Transactions
 
 The transactional approach splits data between `Book` and `Order` whereas the `Order` references the `Book` via a `DBRef`.
 Still the number of available copies is kept within the `books` collection.
@@ -75,6 +76,15 @@ Still the number of available copies is kept within the `books` collection.
 **Spring Profile:** stx   
 **MongoDB Collections:** books, order  
 **Components**: TransactionalOrderService, SyncBookstoreHandler 
+
+### Synchronous Multi Document Transactions with native MongoClient
+
+Just as in the sample above data is split between `Book` and `Order` whereas the `Order` references the `Book` via a `DBRef`.
+However, here we're using the native operations of `MongoClient` and `ClientSession` to run the transaction.
+
+**Spring Profile:** stxn   
+**MongoDB Collections:** books, order  
+**Components**: NativeMongoTransactionalOrderService, SyncBookstoreHandler 
 
 ### Reactive Multi Document Transactions
 

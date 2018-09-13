@@ -109,11 +109,20 @@ public class FantasyBookstoreApplication {
 	}
 
 	/**
-	 * Additional configuration for: synchronous transactions.
+	 * Additional configuration for: synchronous transactions plainly using the {@link com.mongodb.client.MongoClient}.
+	 */
+	@Configuration
+	@Profile(AppProfiles.NATIVE_SYNC_TRANSACTION)
+	class SyncNativeMongoTransactionConfiguration {
+
+	}
+
+	/**
+	 * Additional configuration for: synchronous Spring managed transactions.
 	 */
 	@Configuration
 	@Profile(AppProfiles.SYNC_TRANSACTION)
-	class SyncTransactionConfiguration {
+	class SyncSpringTransactionConfiguration {
 
 		@Bean
 		MongoTransactionManager txManager(MongoDbFactory dbFactory) {
@@ -139,6 +148,9 @@ public class FantasyBookstoreApplication {
 		}
 	}
 
+	/**
+	 * Additional configuration for: Change Streams
+	 */
 	@Configuration
 	@Profile(AppProfiles.REACTIVE_CHANGESTREAMS)
 	class ReactiveChangeStreamConfiguration {
@@ -155,6 +167,9 @@ public class FantasyBookstoreApplication {
 		}
 	}
 
+	/**
+	 * Additional configuration for: Retry on write conflict
+	 */
 	@Configuration
 	@Profile(AppProfiles.RETRYABLE_TRANSACTION)
 	@EnableRetry

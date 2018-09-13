@@ -35,6 +35,12 @@ public final class AppProfiles {
 	public static final String SYNC_ATOMIC = "sa";
 
 	/**
+	 * Spring {@link org.springframework.context.annotation.Profile} to be used for the
+	 * {@link com.mongodb.client.MongoClient} synchronous transactional sample.
+	 */
+	public static final String NATIVE_SYNC_TRANSACTION = "stxn";
+
+	/**
 	 * Spring {@link org.springframework.context.annotation.Profile} to be used for the synchronous transactional sample.
 	 */
 	public static final String SYNC_TRANSACTION = "stx";
