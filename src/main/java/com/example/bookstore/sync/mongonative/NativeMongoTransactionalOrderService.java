@@ -66,22 +66,14 @@ public class NativeMongoTransactionalOrderService implements OrderService {
 
 			session.startTransaction();
 
-			try {
+			database.getCollection("order").insertOne(session, toDocument(order));
 
-				database.getCollection("order").insertOne(session, toDocument(order));
+			UpdateResult result = database.getCollection("books").updateOne(session, //
+					and(eq("_id", book.getId()), gt("available", 0)), //
+					inc("available", -1)); //
 
-				UpdateResult result = database.getCollection("books").updateOne(session, //
-						and(eq("_id", book.getId()), gt("available", 0)), //
-						inc("available", -1)); //
-
-				if (result.getModifiedCount() != 1) {
-					throw new BookSoldOutException(book);
-				}
-
-			} catch (Exception ex) {
-
-				session.abortTransaction();
-				throw ex;
+			if (result.getModifiedCount() != 1) {
+				throw new BookSoldOutException(book);
 			}
 
 			session.commitTransaction();

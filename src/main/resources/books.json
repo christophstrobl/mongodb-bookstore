@@ -1,5 +1,18 @@
 [
   {
+    "_id": "jeffs-book",
+    "title": "The Man in the High Castle",
+    "author": [
+      "Philip K. Dick"
+    ],
+    "published_date": "1962-01-10",
+    "pages": 240,
+    "language": "English",
+    "publisher_id": "Putnam",
+    "available": 3,
+    "checkout": []
+  },
+  {
     "_id": "bb4e114f",
     "title": "The Painted Man",
     "author": [
